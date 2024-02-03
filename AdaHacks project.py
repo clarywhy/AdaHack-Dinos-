@@ -41,7 +41,7 @@ walking = False
 walking_steps = 0
 
 ##Background
-BGImg = pygame.image.load("background.png")
+BGImg = pygame.image.load("backgroundImage1.jpg")
 BGImg = pygame.transform.scale(BGImg, (1000, 650))
 
 
@@ -140,7 +140,7 @@ def mainloop():
     player = player_images[ player_current ]
 
     playerX = 610
-    playerY = 350
+    playerY = 450
 
 
     global pause
