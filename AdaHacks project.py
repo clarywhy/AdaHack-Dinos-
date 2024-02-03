@@ -13,8 +13,8 @@ WIDTH = 1000 #game window width
 HEIGHT = 500 #game window height
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 #colours
-font = pygame.font.SysFont("VT323", 25)
-font2 = pygame.font.SysFont("VT323", 30)
+font = pygame.font.SysFont("Helvetica", 25)
+font2 = pygame.font.SysFont("Aharoni", 30)
 BLACK = [0, 0, 0]
 TEAL = [133, 167, 229]
 BLUE = [0, 102, 102]
@@ -28,12 +28,12 @@ DARKGREY = [100, 100, 100]
 
 ### walking dino buffer to circulate and make it look like its moving
 player_images = []
-player_images.append( pygame.image.load('dinowalk1.png.png') )
-player_images.append( pygame.image.load('dinowalk2.png.png') )
+player_images.append( pygame.image.load('dinowalk1.png') )
+player_images.append( pygame.image.load('dinowalk2.png') )
 player_current = 0
 player = player_images[ player_current ]
 
-hopper = pygame.image.load("hopper.png.png")
+hopper = pygame.image.load("hopper.png")
 hopper = pygame.transform.scale(hopper, (80, 80))
 hopperRect = hopper.get_rect()
 
@@ -171,13 +171,13 @@ def mainloop():
     walking_backwards = False
 
     player_images = []
-    dino1 =  pygame.image.load('dinowalk1.jpg')
+    dino1 =  pygame.image.load('dinowalk1.png')
     dino1 = pygame.transform.scale(dino1, (80,80))
     dinoRect1 = dino1.get_rect()
-    dino2 =  pygame.image.load('dinowalk2.jpg')
+    dino2 =  pygame.image.load('dinowalk2.png')
     dino2 = pygame.transform.scale(dino2, (80, 80))
     dinoRect2 = dino2.get_rect()
-    hopper = pygame.image.load("hopper.png.png")
+    hopper = pygame.image.load("hopper.png")
     hopper = pygame.transform.scale(hopper, (80, 80))
     hopperRect = hopper.get_rect()
     player_images.append(dino1)
@@ -207,8 +207,8 @@ def mainloop():
     bunnyGroup = pygame.sprite.Group()
 
     # Create instances of Dino and Bunny
-    dino = Dino('dinowalking1.jpg', (300, 350), (80, 80))
-    bunny = Bunny('hopper.png.png', (850, 400), (80, 80))
+    dino = Dino('dinowalk1.png', (300, 350), (80, 80))
+    bunny = Bunny('hopper.png', (850, 400), (80, 80))
 
     # Add instances to their respective groups
     dinoGroup.add(dino)
@@ -219,9 +219,9 @@ def mainloop():
     while gameLoop==True:
 
 
-
+               
         clock.tick(30)
-
+               
         # ----------- events -----------------
 
         for event in pygame.event.get():
@@ -299,5 +299,3 @@ def mainloop():
         
         
 titleLoop()
-
-
