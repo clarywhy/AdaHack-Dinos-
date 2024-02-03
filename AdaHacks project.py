@@ -134,7 +134,7 @@ def display_instructions():
     # Instructions text
 
     instructions = [
-        "Welcome to Your Game!",
+        "Welcome to Dino in Paris!",
         "Instructions:",
         "- Read what the bunny characters on screen are saying.",
         "- Press next to read the next part of their conversation",
@@ -226,6 +226,13 @@ french_message_index = 0
 # This variable will toggle between showing English and French messages
 show_english = True
 
+# Initialize separate indices for English and French messages
+english_message_index = 0
+french_message_index = 0
+
+# This variable toggles between showing English and French messages
+show_english = True
+
 def next_message():
     global english_message_index, french_message_index, show_english
 
@@ -233,6 +240,7 @@ def next_message():
         # Increment English message index if not at the end of the list
         if english_message_index < len(english_messages) - 1:
             english_message_index += 1
+            pygame.time.delay(1000)
         else:
             # Optional: Reset index or handle completion
             english_message_index = 0  # Or set to len(english_messages) - 1 to stop incrementing
@@ -240,6 +248,7 @@ def next_message():
         # Increment French message index if not at the end of the list
         if french_message_index < len(french_messages) - 1:
             french_message_index += 1
+            pygame.time.delay(1000)
         else:
             # Optional: Reset index or handle completion
             french_message_index = 0  # Or set to len(french_messages) - 1 to stop incrementing
@@ -379,18 +388,26 @@ def mainloop():
         # Inside your game loop, draw the current message
         
         button("Next", 900, 400, 80, 30, TEAL, next_message)  # Adjust position and size as needed
-        font = pygame.font.Font("VT323-Regular.ttf", 24)  # Adjust the size as needed
-        if show_english:
-            # Display English message
-            text_surface = font.render(english_messages[english_message_index], True, WHITE)
-            text_rect = text_surface.get_rect(center=(750, 340))
-        else:
-            # Display French message
-            text_surface = font.render(french_messages[french_message_index], True, WHITE)
-            text_rect = text_surface.get_rect(center=(850, 340))
+        # Inside mainloop, where messages are displayed
+        font = pygame.font.Font("VT323-Regular.ttf", 24)
 
+        # Determine which message to show based on the indices
+        if (english_message_index + french_message_index) % 2 == 0:
+            # Show English message above Topper
+            message = english_messages[english_message_index]
+            message_position = (750, 350)
+        else:
+            # Show French message above Hopper
+            message = french_messages[french_message_index]
+            message_position = (850, 350)
+
+        # Render and display the message
+        text_surface = font.render(message, True, WHITE)
+        text_rect = text_surface.get_rect(center=message_position)
         screen.blit(text_surface, text_rect)
-    
+
+
+        
 
         meetUp = False
         # --- checking for meet up -----
