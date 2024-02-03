@@ -11,7 +11,7 @@ pygame.init()
 ########### SET UP #########################   
            
 WIDTH = 1000 #game window width
-HEIGHT = 650 #game window height
+HEIGHT = 500 #game window height
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 #colours
 font = pygame.font.SysFont("Helvetica", 25)
@@ -42,17 +42,17 @@ walking_steps = 0
 
 ##Background
 BGImg = pygame.image.load("backgroundImage1.jpg")
-BGImg = pygame.transform.scale(BGImg, (1000, 650))
+BGImg = pygame.transform.scale(BGImg, (WIDTH, HEIGHT ))
 
 
 
 ##Screens
-displayWidth, displayHeight = 1000, 650
+displayWidth, displayHeight = WIDTH, HEIGHT
 gameDisplay = pygame.display.set_mode((displayWidth, displayHeight))
 titleImg = pygame.image.load("startpage.png")
 titleImg = pygame.transform.scale(titleImg, (displayWidth, displayHeight))
 EoGImg = pygame.image.load("endofgamescreen.png")
-EoGImg = pygame.transform.scale(EoGImg, (1000, 650))
+EoGImg = pygame.transform.scale(EoGImg, (displayWidth, displayHeight))
 titleScreen = False
 
 
@@ -140,13 +140,11 @@ def mainloop():
     player = player_images[ player_current ]
 
     playerX = 610
-    playerY = 450
+    playerY = 350
 
 
     global pause
     #rectangle = (0, 40, 1000, 610)
-    dinoX = 450
-    dinoY = 250
 
 
     global score
