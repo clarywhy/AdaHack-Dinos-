@@ -57,7 +57,8 @@ BGImg = pygame.image.load("Level2-eiffel.png")
 BGImg = pygame.transform.scale(BGImg, (WIDTH, HEIGHT ))
 eiffelTower = pygame.image.load("eiffeltower.png")
 eiffelTower = pygame.transform.scale(eiffelTower, (180, 300))
-
+BGImg2 = pygame.image.load("Level1-street.png")
+BGImg2 = pygame.transform.scale(BGImg2, (WIDTH, HEIGHT ))
 
 ##Screens
 displayWidth, displayHeight = WIDTH, HEIGHT
@@ -85,7 +86,6 @@ def button(msg, x, y, w, h, c, action=None):
     font = pygame.font.Font(font_path, font_size)
 
     # Create a text surface
-    text = font.render("Hello, VT323 Font!", True, (255, 255, 255))
     # parameters taken - message, x coord, y coord, width, height, colour, action
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -226,10 +226,8 @@ def mainloop():
     playerX = 200
     playerY = 350
 
-
     global pause
     #rectangle = (0, 40, 1000, 610)
-
 
     global score
     score = 0

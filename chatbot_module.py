@@ -18,8 +18,9 @@ class ChatbotLevel:
         
         self.chatbot = ChatBot(name)
         trainer = ChatterBotCorpusTrainer(self.chatbot)
-        for module in corpusModules:
-            trainer.train(module)
+        # for module in corpusModules: TODO: this
+        #     trainer.train(module)
+        trainer.train('chatterbot.corpus.french')
         listTrainer = ListTrainer(self.chatbot)
         listTrainer.train(conversation)
 
@@ -29,64 +30,43 @@ first_level = ChatbotLevel(
     [
         "Bonjour",
         "Salut",      
-        "Ca va?",
-        "Bien, et toi?",
-        "Bien, merci",
-        "Super!"
     ], 
     {2: ["bonjour", "salut", "bonsoir", "coucou"], 
      1: ["bon jour", "bon soir"]}, 
     ["chatterbot.corpus.french.greetings"])
 
 # Say hello and ask how someone is and respond
-# second_level = ChatbotLevel(
-#     "Hopper", 
-#     [
-#         "Bonjour",
-#         "Salut",      
-#         "Ca va?",
-#         "Bien, et toi?",
-#         "Bien, merci",
-#         "Super!"
-#     ], 
-#     {2: ["bonjour", "salut", "bonsoir", "coucou", "ça va", "comment allez vous", "comment allez-vous", "bien", "mal"], 
-#      1: ["bon jour", "bon soir", "ca va", "bon"]}, 
-#     ["chatterbot.corpus.french.greetings"])
-
-# Say hello in the evening
-# second_level = ChatbotLevel(
-#     "Hopper", 
-#     [
-#         "Bonsoir",
-#         "Bonsoir",      
-#         "Ca va?",
-#         "Bien, et toi?",
-#         "Bien, merci",
-#         "Super!"
-#     ], 
-#     {2: ["bonsoir", "ça va", "comment allez vous", "comment allez-vous", "bien", "mal"], 
-#      1: ["bon soir", "ca va", "bon"]}, 
-#     ["chatterbot.corpus.french.greetings"])
+second_level = ChatbotLevel(
+    "Hopper", 
+    [
+        "Bonjour",
+        "Salut",      
+        "Ca va?",
+        "Bien, et toi?",
+        "Bien, merci",
+        "Super!"
+    ], 
+    {2: ["bonjour", "salut", "bonsoir", "coucou", "ça va", "comment allez vous", "comment allez-vous", "bien", "mal"], 
+     1: ["bon jour", "bon soir", "ca va", "bon"]}, 
+    ["chatterbot.corpus.french.greetings"])
 
 # Say hello and ask for directions
-# fourth_level = ChatbotLevel(
-#     "Hopper", 
-#     [
-#         "Bonjour",
-#         "Salut",        
-#         "Ca va?",
-#         "Super, et toi?",
-#         "Bien, merci",
-#         "Où est la tour Eiffel?",
-#         "à gauche",
-#         "Là-bas?",
-#         "Oui",
-#         "Merci becaucoup",
-#         "Au revoir",
-#         "Au revoir",
-#     ], 
-#     {2: ["où est"], 1: ["ou est"]}, 
-#     ["chatterbot.corpus.french.greetings", "chatterbot.corpus.french.conversations"])
+third_level = ChatbotLevel(
+    "Hopper", 
+    [
+        "Bonjour",
+        "Salut",        
+        "Ca va?",
+        "Super, et toi?",
+        "Bien, merci",
+        "Où est la tour Eiffel?",
+        "à gauche",
+        "Merci beaucoup",
+        "Au revoir",
+        "Au revoir",
+    ], 
+    {2: ["où est"], 1: ["ou est"]}, 
+    ["chatterbot.corpus.french.greetings", "chatterbot.corpus.french.conversations"])
 
 
 def conversation_loop(level):
@@ -94,7 +74,7 @@ def conversation_loop(level):
     while True:
         # Ask the user to input
         user_prompt = input("You: ")
-        print(user_score) # for debugging , remove
+        # print(user_score) # for debugging , remove
         
         # Add to the user's score if they use key phrases from the lessom
         for score, words in level.targetWords.items():
@@ -115,27 +95,24 @@ def conversation_loop(level):
         print(level.name + ": ", response)
 
     # Translate unknown phrases
-    translate_unknown_phrases()
-    # while True:
-    #     translator = Translator()
-    #     # TODO: turn this into a button
-    #     print("Were there any phrases Hopper used that you didn't understand? Press 'n' to exit")
-    #     user_word = input("Type them in here and we'll give you the English translation: ")
-
-    #     if user_word.lower() == 'n':
-    #         break
-    #     try:
-    #         translation = translator.translate(user_word, dest='en', src='fr').text
-    #         print("Translation:", translation)
-    #     except Exception as e:
-    #         print("Translation error:", str(e))
+    # translate_unknown_phrases()
 
 # Start the first level
 # Prompt for the user to start the conversation
-# print("Say hello to Hopper!")
-# print("When you are finished with the conversation, say \"Au Revior\", which means goodbye!") 
+print("Say hello to Hopper!")
+print("When you are finished with the conversation, say \"Au Revoir\", which means goodbye!") 
 # TODO: Run the example conversation
 # TODO: Add user guidance - hint button?
 # Initialise the chatbot   
-# conversation_loop(first_level)
+conversation_loop(first_level)
+
+print("Say hello to Hopper and ask how they're doing!")
+print("When you are finished with the conversation, say \"Au Revoir\", which means goodbye!") 
+conversation_loop(second_level)
+
+print("Say hello to Hopper and ask for directions to the Eiffel Tower!")
+print("In French, the Eiffel Tower is 'La tour Eiffel'!")
+print("When you are finished with the conversation, say \"Au Revoir\", which means goodbye!") 
+conversation_loop(third_level)
+print(user_score)
 
