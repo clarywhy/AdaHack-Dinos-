@@ -2,7 +2,6 @@
 
 import pygame, random, csv, threading, time, sys, os, math
 from pygame import mixer
-from threading import Timer
 from pygame.locals import *
 clock = pygame.time.Clock()
 pygame.init()
@@ -34,11 +33,18 @@ player_images.append( pygame.image.load('dinowalk2.png') )
 player_current = 0
 player = player_images[ player_current ]
 
+hopper = pygame.image.load("hopper.png")
+hopper = pygame.transform.scale(hopper, (80, 80))
+hopperRect = hopper.get_rect()
+
 playerX = 610
 playerY = 350
 
 walking = False
 walking_steps = 0
+
+dinoGroup = pygame.sprite.GroupSingle(None)  # single group as only one player
+bunnyGroup = pygame.sprite.GroupSingle(None)  # group containing all sprites (for updating them in one go)
 
 ##Background
 BGImg = pygame.image.load("backgroundImage1.jpg")
@@ -126,8 +132,35 @@ def titleLoop():
         pygame.display.update()
         clock.tick(60)
 
+def colCheck(x,y,w,h,x2,y2,w2,h2):
+#checks if two sprites have met up by comparing the pixel space by comparing their coordinates
+    global collision
+    collision = False
+    if (x < (x2 + w2) and (x + w) > x2 and y < (y2 + h2) and (h + y) > y2):
+        collision = True
 
-        
+
+class Dino(pygame.sprite.Sprite):
+    def __init__(self, image_path, position, dimensions):
+        super().__init__()
+        self.image = pygame.image.load(image_path)
+        self.image = pygame.transform.scale(self.image, dimensions)
+        self.rect = self.image.get_rect(center=position)
+    
+    def update(self, x, y):
+        # Update the sprite's position.
+        self.rect.x = x
+        self.rect.y = y
+
+
+class Bunny(pygame.sprite.Sprite):
+    def __init__(self, image_path, position, dimensions):
+        super().__init__()
+        self.image = pygame.image.load(image_path)
+        self.image = pygame.transform.scale(self.image, dimensions)
+        self.rect = self.image.get_rect(center=position)
+
+
 def mainloop():
 
     ####### no clue why the global variables at the start aren't being accessed here]
@@ -140,8 +173,13 @@ def mainloop():
     player_images = []
     dino1 =  pygame.image.load('dinowalk1.png')
     dino1 = pygame.transform.scale(dino1, (80,80))
+    dinoRect1 = dino1.get_rect()
     dino2 =  pygame.image.load('dinowalk2.png')
     dino2 = pygame.transform.scale(dino2, (80, 80))
+    dinoRect2 = dino2.get_rect()
+    hopper = pygame.image.load("hopper.png")
+    hopper = pygame.transform.scale(hopper, (80, 80))
+    hopperRect = hopper.get_rect()
     player_images.append(dino1)
     player_images.append(dino2)
     player_current = 0
@@ -161,9 +199,29 @@ def mainloop():
 
     global gameLoop
     gameLoop = True
-    while gameLoop==True:
-        clock.tick(30)
 
+    #bunnyGroup.add(hopper)
+    #dinoGroup.add(player)
+    # Initialize sprite groups
+    dinoGroup = pygame.sprite.GroupSingle()
+    bunnyGroup = pygame.sprite.Group()
+
+    # Create instances of Dino and Bunny
+    dino = Dino('dinowalk1.png', (300, 350), (80, 80))
+    bunny = Bunny('hopper.png', (850, 400), (80, 80))
+
+    # Add instances to their respective groups
+    dinoGroup.add(dino)
+    bunnyGroup.add(bunny)
+
+    ##### player sprite
+
+    while gameLoop==True:
+
+
+               
+        clock.tick(30)
+               
         # ----------- events -----------------
 
         for event in pygame.event.get():
@@ -207,11 +265,33 @@ def mainloop():
                 walking = False 
         
         #screen.blit(dinoImg, (dinoX, dinoY))
+        # Inside the game loop, after processing movement
+        dino.update(playerX, playerY)
          
         # --- draws ---
 
         screen.blit(BGImg, (0,0))
         screen.blit(player, (playerX, playerY))
+        meetUp = False
+        # --- checking for meet up -----
+        if pygame.sprite.spritecollideany(dinoGroup.sprite, bunnyGroup):
+            print("Collision detected!")
+            msg = "Filler Text"
+            pygame.draw.rect(screen, WHITE, (10, 450, 950, 40), 2)
+            text = pygame.font.SysFont("Aharoni", 30)
+            textSurf, textRect = textObjects(msg, text)
+            textRect.center = ((10+(800/2)), 450+(30/2))
+            screen.blit(textSurf, textRect)
+        
+        
+
+        for sprite in bunnyGroup:
+            sprite.update()  # update each sprite so change position etc.
+        
+        bunnyGroup.draw(screen)
+        pygame.draw.rect(screen, (255, 0, 0), dinoGroup.sprite.rect, 2)  # Draw dino rect in red
+        for bunny in bunnyGroup:
+            pygame.draw.rect(screen, (0, 255, 0), bunny.rect, 2)  # Draw bunny rects in green
 
         #pygame.display.flip()
         pygame.display.update()
@@ -219,3 +299,6 @@ def mainloop():
         
         
 titleLoop()
+
+
+
