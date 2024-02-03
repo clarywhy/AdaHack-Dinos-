@@ -2,7 +2,6 @@
 
 import pygame, random, csv, threading, time, sys, os, math
 from pygame import mixer
-from threading import Timer
 from pygame.locals import *
 clock = pygame.time.Clock()
 pygame.init()
@@ -29,12 +28,12 @@ DARKGREY = [100, 100, 100]
 
 ### walking dino buffer to circulate and make it look like its moving
 player_images = []
-player_images.append( pygame.image.load('dinowalk1.png') )
-player_images.append( pygame.image.load('dinowalk2.png') )
+player_images.append( pygame.image.load('dinowalk1.png.png') )
+player_images.append( pygame.image.load('dinowalk2.png.png') )
 player_current = 0
 player = player_images[ player_current ]
 
-hopper = pygame.image.load("hopper.jpg")
+hopper = pygame.image.load("hopper.png.png")
 hopper = pygame.transform.scale(hopper, (80, 80))
 hopperRect = hopper.get_rect()
 
@@ -164,13 +163,13 @@ def mainloop():
     walking_backwards = False
 
     player_images = []
-    dino1 =  pygame.image.load('dinowalk.jpg')
+    dino1 =  pygame.image.load('dinowalk1.png.png')
     dino1 = pygame.transform.scale(dino1, (80,80))
     dinoRect2 = dino1.get_rect()
-    dino2 =  pygame.image.load('dinowalk.jpg')
+    dino2 =  pygame.image.load('dinowalk2.png.png')
     dino2 = pygame.transform.scale(dino2, (80, 80))
     dinoRect2 = dino2.get_rect()
-    hopper = pygame.image.load("hopper.jpg")
+    hopper = pygame.image.load("hopper.png.png")
     hopper = pygame.transform.scale(hopper, (80, 80))
     hopperRect = hopper.get_rect()
     player_images.append(dino1)
@@ -200,8 +199,8 @@ def mainloop():
     bunnyGroup = pygame.sprite.Group()
 
     # Create instances of Dino and Bunny
-    dino = Dino('dinowalking1.jpg', (610, 350), (80, 80))
-    bunny = Bunny('hopper.jpg', (500, 380), (80, 80))
+    dino = Dino('dinowalking1.jpg', (300, 350), (80, 80))
+    bunny = Bunny('hopper.png.png', (850, 400), (80, 80))
 
     # Add instances to their respective groups
     dinoGroup.add(dino)
@@ -265,10 +264,18 @@ def mainloop():
 
         screen.blit(BGImg, (0,0))
         screen.blit(player, (playerX, playerY))
-
+        meetUp = False
         # --- checking for meet up -----
         if pygame.sprite.spritecollideany(dinoGroup.sprite, bunnyGroup):
             print("Collision detected!")
+            msg = "Filler Text"
+            pygame.draw.rect(screen, WHITE, (10, 450, 950, 40), 2)
+            text = pygame.font.SysFont("Aharoni", 30)
+            textSurf, textRect = textObjects(msg, text)
+            textRect.center = ((10+(800/2)), 450+(30/2))
+            screen.blit(textSurf, textRect)
+        
+        
 
         for sprite in bunnyGroup:
             sprite.update()  # update each sprite so change position etc.
