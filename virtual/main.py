@@ -3,7 +3,9 @@
 # External imports
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
+from googletrans import Translator
 
+user_score = 0
 class ChatbotLevel:
     # Train the chatbot
     def __init__(self, name, conversation, targetWords, corpusModules):
@@ -81,23 +83,23 @@ first_level = ChatbotLevel(
 def conversation_loop(level):
     
     # Record the score for this level
-    this_level_user_score = 0
-
+    # this_level_user_score = 0
+    global user_score
     while True:
         # Ask the user to input
         user_prompt = input("You: ")
-        # print(userScore)
-        print(this_level_user_score)
+        print(user_score)
+        # print(this_level_user_score)
         
         # Add to the user's score if they use key phrases from the lessom
         for word in level.targetWords:
             if word in user_prompt.lower():
-                this_level_user_score += 1
+                user_score += 1
                 
         # Stop the conversation 
         if "au revoir" in user_prompt.lower():
             print(level.name + ": Au revoir!")
-            print("Score:", this_level_user_score)
+            print("Score:", user_score)
             break
 
         # Get a response from the chatbot
@@ -106,7 +108,7 @@ def conversation_loop(level):
         # Shot the chatbot response
         print(level.name + ": ", response)
 
-    return this_level_user_score
+    # return user_score
 
 # Start the first level
 # Prompt for the user to start the conversation
@@ -115,4 +117,10 @@ print("When you are finished with the conversation, say \"Au Revior\", which mea
 # TODO: Run the example conversation
 # TODO: Fix the score update
 # Initialise the chatbot   
-additional_score = conversation_loop(first_level)
+conversation_loop(first_level)
+conversation_loop(first_level)
+
+translator = Translator()
+
+print("Were there any phrases Hopper used that you didn't understand?")
+print("Type them in here and we'll give you the english translationm")
