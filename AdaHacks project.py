@@ -26,9 +26,6 @@ DARKGREY = [100, 100, 100]
 
 
 ############## GLOBAL SPRITES ######################
-##Dino
-dinoImg = pygame.image.load("dino2.png")
-dinoImg = pygame.transform.scale(dinoImg, (100, 100))
 
 ### walking dino buffer to circulate and make it look like its moving
 player_images = []
