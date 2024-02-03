@@ -49,13 +49,13 @@ bunnyGroup = pygame.sprite.GroupSingle(None)  # group containing all sprites (fo
 ##Background
 BGImg = pygame.image.load("Level2-eiffel.png")
 BGImg = pygame.transform.scale(BGImg, (WIDTH, HEIGHT ))
-
-
+BGImg2 = pygame.image.load("Level1-street.png")
+BGImg2 = pygame.transform.scale(BGImg2, (WIDTH, HEIGHT ))
 
 ##Screens
 displayWidth, displayHeight = WIDTH, HEIGHT
 gameDisplay = pygame.display.set_mode((displayWidth, displayHeight))
-titleImg = pygame.image.load("startpage.png")
+titleImg = pygame.image.load("startscrn.png")
 titleImg = pygame.transform.scale(titleImg, (displayWidth, displayHeight))
 #EoGImg = pygame.image.load("endofgamescreen.png")
 #EoGImg = pygame.transform.scale(EoGImg, (displayWidth, displayHeight))
@@ -78,7 +78,6 @@ def button(msg, x, y, w, h, c, action=None):
     font = pygame.font.Font(font_path, font_size)
 
     # Create a text surface
-    text = font.render("Hello, VT323 Font!", True, (255, 255, 255))
     # parameters taken - message, x coord, y coord, width, height, colour, action
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -193,10 +192,8 @@ def mainloop():
     playerX = 610
     playerY = 350
 
-
     global pause
     #rectangle = (0, 40, 1000, 610)
-
 
     global score
     score = 0
