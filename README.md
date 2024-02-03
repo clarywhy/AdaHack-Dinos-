@@ -4,5 +4,4 @@ Project for adahack
 ### preprogrammed_conversations 
 - directory containing CSVs for the preprogrammed conversations, delimiter ";" (the ones the user learns from but doesn't interact with)
 - French; English
-- initial_conversaton.csv - An initial conversation of two characters greeting
-- ask_for_directions.csv - Asking for directions to the Eiffel Tower
+- levels one to four
