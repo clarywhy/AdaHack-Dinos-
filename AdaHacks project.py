@@ -3,6 +3,7 @@
 import pygame, random, csv, threading, time, sys, os, math
 from pygame import mixer
 from pygame.locals import *
+# from chatbot_module import ChatbotLevel, first_level, second_level
 clock = pygame.time.Clock()
 pygame.init()
 
@@ -23,6 +24,8 @@ RED = [255, 0, 0]
 GREY = [211, 211, 211]
 DARKGREY = [100, 100, 100]
 
+lvl_one_convo = ["Say hello to Hopper!", "When you are finished with the conversation, say \"Au Revoir\"!"]
+current_convo_index = 0
 
 ############## GLOBAL SPRITES ######################
 
@@ -291,13 +294,29 @@ def mainloop():
             text = font.render("Hello, VT323 Font!", True, (255, 255, 255))
     
             ###### write message
-            msg = "Filler Text"
             pygame.draw.rect(screen, WHITE, (10, 450, 950, 40))
+            space_text = font.render("Press [SPACE] to continue", True, (0, 0, 0))
+            space_text_rect = text.get_rect()
+            #textSurf, textRect = textObjects(msg, text)
+            space_text_rect.center = ((10+(950/2)), 450+(40/2))
+            screen.blit(space_text, space_text_rect)
+
+            global current_convo_index
+            msg = lvl_one_convo[current_convo_index]
+            pygame.draw.rect(screen, WHITE, (10, 200, 950, 40))
             text = font.render(msg, True, (0, 0, 0))
             textRect = text.get_rect()
             #textSurf, textRect = textObjects(msg, text)
-            textRect.center = ((10+(950/2)), 450+(40/2))
+            textRect.center = (10 + 950 // 2, 200 + 40 // 2)
             screen.blit(text, textRect)
+
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == K_SPACE:
+                        if current_convo_index != 1:
+                            current_convo_index += 1
+
+
         
         
 
