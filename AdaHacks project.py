@@ -3,6 +3,7 @@
 import pygame, random, csv, threading, time, sys, os, math
 from pygame import mixer
 from pygame.locals import *
+import pygame_textinput
 clock = pygame.time.Clock()
 pygame.init()
 
@@ -298,6 +299,38 @@ def mainloop():
             #textSurf, textRect = textObjects(msg, text)
             textRect.center = ((10+(950/2)), 450+(40/2))
             screen.blit(text, textRect)
+            
+            while True:
+                # screen.fill((225, 225, 225))
+
+                textinput = pygame_textinput.TextInputVisualizer()
+                events = pygame.event.get()
+
+                # Feed it with events every frame
+                textinput.update(events)
+                # textinput_custom.update(events)
+
+                # Get its surface to blit onto the screen
+                screen.blit(textinput.surface, (10, 10))
+                # screen.blit(textinput_custom.surface, (10, 50))
+
+                # Modify attributes on the fly - the surface is only rerendered when .surface is accessed & if values changed
+                # textinput_custom.font_color = [(c+10)%255 for c in textinput_custom.font_color]
+
+                # Check if user is exiting or pressed return
+                for event in events:
+                    if event.type == pygame.QUIT:
+                        exit()
+
+                    if event.key == pygame.K_RETURN:
+                        input_text = textinput.value
+                        break
+
+                pygame.display.update()
+                
+                clock.tick(30)
+                
+            print(input_text)
         
         
 

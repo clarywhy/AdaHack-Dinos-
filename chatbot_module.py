@@ -18,9 +18,9 @@ class ChatbotLevel:
         
         self.chatbot = ChatBot(name)
         trainer = ChatterBotCorpusTrainer(self.chatbot)
-        # for module in corpusModules: TODO: this
-        #     trainer.train(module)
-        trainer.train('chatterbot.corpus.french')
+        for module in corpusModules: #TODO: this
+            trainer.train(module)
+        # trainer.train("chatterbot.corpus.french.greetings")
         listTrainer = ListTrainer(self.chatbot)
         listTrainer.train(conversation)
 
