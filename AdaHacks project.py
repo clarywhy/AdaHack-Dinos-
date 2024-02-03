@@ -178,27 +178,54 @@ class Bunny(pygame.sprite.Sprite):
 
 ######### messages ################
 # Define messages for the conversation
-messages = [
-    "Bunny One: Message 1",
-    "Bunny Two: Message 2",
-    "Bunny One: Message 3",
-    "Bunny Two: Message 4"
-]
-current_message_index = 0  # To keep track of which message to display
+french_messages = [
+    "Salut, Hopper!", 
+    "Bonjour, Hopper!", 
+    "Au revoir, Hopper!"]
 
-# Function to go to the next message
+english_messages = ["Hi, Hopper!",
+                    "Hello, Hopper!", 
+                    "Goodbye, Hopper!"]
+
+# Initialize separate indices for English and French messages
+english_message_index = 0
+french_message_index = 0
+
+# This variable will toggle between showing English and French messages
+show_english = True
+
 def next_message():
-    global current_message_index
-    current_message_index += 1
-    if current_message_index >= len(messages):
-        current_message_index = 0  # Loop back to the first message or end conversation
+    global english_message_index, french_message_index, show_english
+
+    if show_english:
+        # Increment English message index if not at the end of the list
+        if english_message_index < len(english_messages) - 1:
+            english_message_index += 1
+        else:
+            # Optional: Reset index or handle completion
+            english_message_index = 0  # Or set to len(english_messages) - 1 to stop incrementing
+    else:
+        # Increment French message index if not at the end of the list
+        if french_message_index < len(french_messages) - 1:
+            french_message_index += 1
+        else:
+            # Optional: Reset index or handle completion
+            french_message_index = 0  # Or set to len(french_messages) - 1 to stop incrementing
+
+    # Toggle between English and French for the next click
+    show_english = not show_english
+
 
 # Modify or ensure your button function can call next_message
 # You might have already a way to call a function, just ensure it calls next_message when needed
 
 
+current_french_message_index = 0
+current_english_message_index = 0
 
 def mainloop():
+    global current_french_message_index
+    global current_english_message_index
 
     ####### no clue why the global variables at the start aren't being accessed here]
     ####### if anyone can fix this, slay
@@ -318,12 +345,20 @@ def mainloop():
 
         ############# conversation for first two bunnies ####################
         # Inside your game loop, draw the current message
+        
+        button("Next", 900, 400, 80, 30, TEAL, next_message)  # Adjust position and size as needed
         font = pygame.font.Font("VT323-Regular.ttf", 24)  # Adjust the size as needed
-        text_surface = font.render(messages[current_message_index], True, WHITE)
-        text_rect = text_surface.get_rect(center=(750, 340))  # Adjust position as needed
+        if show_english:
+            # Display English message
+            text_surface = font.render(english_messages[english_message_index], True, WHITE)
+            text_rect = text_surface.get_rect(center=(750, 340))
+        else:
+            # Display French message
+            text_surface = font.render(french_messages[french_message_index], True, WHITE)
+            text_rect = text_surface.get_rect(center=(850, 340))
+
         screen.blit(text_surface, text_rect)
-        # Inside your game loop, add a button for progressing through messages
-        button("Next", 900, 450, 80, 30, TEAL, next_message)  # Adjust position and size as needed
+    
 
         meetUp = False
         # --- checking for meet up -----
@@ -348,11 +383,11 @@ def mainloop():
 
             global current_convo_index
             msg = lvl_one_convo[current_convo_index]
-            pygame.draw.rect(screen, WHITE, (10, 200, 950, 40))
+            pygame.draw.rect(screen, WHITE, (10, 10, 950, 40))
             text = font.render(msg, True, (0, 0, 0))
             textRect = text.get_rect()
             #textSurf, textRect = textObjects(msg, text)
-            textRect.center = (10 + 950 // 2, 200 + 40 // 2)
+            textRect.center = (10 + 950 // 2, 10 + 40 // 2)
             screen.blit(text, textRect)
 
             for event in pygame.event.get():
