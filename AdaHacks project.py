@@ -47,7 +47,7 @@ dinoGroup = pygame.sprite.GroupSingle(None)  # single group as only one player
 bunnyGroup = pygame.sprite.GroupSingle(None)  # group containing all sprites (for updating them in one go)
 
 ##Background
-BGImg = pygame.image.load("backgroundImage1.jpg")
+BGImg = pygame.image.load("Level2-eiffel.png")
 BGImg = pygame.transform.scale(BGImg, (WIDTH, HEIGHT ))
 
 
