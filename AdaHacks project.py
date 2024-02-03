@@ -24,8 +24,12 @@ RED = [255, 0, 0]
 GREY = [211, 211, 211]
 DARKGREY = [100, 100, 100]
 
-lvl_one_convo = ["Say hello to Hopper!", "When you are finished with the conversation, say \"Au Revoir\"!"]
+
+text_input_active = False
+
+lvl_one_convo = ["Say hello to Hopper!", "When you are finished with the conversation, say \"Au Revoir\"!", "Your turn: "]
 current_convo_index = 0
+user_text =''
 
 ############## GLOBAL SPRITES ######################
 
@@ -219,7 +223,7 @@ french_messages = [
 english_messages = ["Hi, Hopper!",
                     "Hello, Hopper!", 
                     "Goodbye, Hopper!",
-                    ""]
+                    ""                    ]
 
 # Initialize separate indices for English and French messages
 english_message_index = 0
@@ -414,7 +418,6 @@ def mainloop():
         meetUp = False
         # --- checking for meet up -----
         if pygame.sprite.spritecollideany(dinoGroup.sprite, bunnyGroup):
-            print("Collision detected!")
 
             ##### Define Font for message ###########
             font_path = "VT323-Regular.ttf"  # Replace with the actual path to VT323.ttf on your system
@@ -423,44 +426,62 @@ def mainloop():
 
             # Create a text surface
             text = font.render("Hello, VT323 Font!", True, (255, 255, 255))
-    
-            ###### write message
+            # write message
             pygame.draw.rect(screen, WHITE, (10, 450, 950, 40))
             space_text = font.render("Press [SPACE] to continue", True, (0, 0, 0))
-            space_text_rect = text.get_rect()
-            #textSurf, textRect = textObjects(msg, text)
-            space_text_rect.center = ((10+(950/2)), 450+(40/2))
+            space_text_rect = space_text.get_rect()
+            space_text_rect.center = (10 + 950 // 2, 450 + 40 // 2)
             screen.blit(space_text, space_text_rect)
 
+            # ...
             global current_convo_index
-            msg = lvl_one_convo[current_convo_index]
-            pygame.draw.rect(screen, WHITE, (10, 10, 950, 40))
-            text = font.render(msg, True, (0, 0, 0))
-            textRect = text.get_rect()
-            #textSurf, textRect = textObjects(msg, text)
-            textRect.center = (10 + 950 // 2, 10 + 40 // 2)
-            screen.blit(text, textRect)
-
+            global text_input_active
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
                     if event.key == K_SPACE:
-                        if current_convo_index != 1:
+                        if current_convo_index != 2:
                             current_convo_index += 1
+                            print(current_convo_index)
+                        if current_convo_index == 2:
+                            os.system("python chatbot_module.py")
+            
+            # global user_text
+            # events = pygame.event.get()
+            # if event.type == QUIT:
+            #     running = False
+            # elif event.type == KEYDOWN:
+            #     if text_input_active:
+            #         if event.key == K_RETURN:
+            #             # Handle Enter key, e.g., submit user_text
+            #             print("User input:", user_text)
+            #             user_text = ""
+            #         elif event.key == K_BACKSPACE:
+            #             # Handle Backspace key
+            #             user_text = user_text[:-1]
+            #         else:
+            #             # Handle other key presses
+            #             user_text += event.unicode
 
+            # if text_input_active:
+            #     user_text_surface = font.render(user_text, True, (255,255,255))
+            #     screen.blit(user_text_surface, (10,10))
 
-        
-        
+            else:
+                # Draw the conversation message
+                msg = lvl_one_convo[current_convo_index]
+                pygame.draw.rect(screen, WHITE, (10, 10, 950, 40))
+                text = font.render(msg, True, (0, 0, 0))
+                textRect = text.get_rect()
+                textRect.center = (10 + 950 // 2, 10 + 40 // 2)
+                screen.blit(text, textRect)
 
         for sprite in bunnyGroup:
             sprite.update()  # update each sprite so change position etc.
         
-
-        
         bunnyGroup.draw(screen)
         #pygame.draw.rect(screen, (255, 0, 0), dinoGroup.sprite.rect, 2)  # Draw dino rect in red
         #for bunny in bunnyGroup:
-            #pygame.draw.rect(screen, (0, 255, 0), bunny.rect, 2)  # Draw bunny rects in green
-        
+        #    pygame.draw.rect(screen, (0, 255, 0), bunny.rect, 2)  # Draw bunny rects in green
 
         #pygame.display.flip()
         pygame.display.update()
