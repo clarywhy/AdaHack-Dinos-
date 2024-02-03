@@ -16,7 +16,7 @@ Directions to run coming soon!
 
 ## File structure
 ### preprogrammed_conversations 
-- directory containing CSVs for the preprogrammed conversations, French; English
+(directory containing CSVs for the preprogrammed conversations, French; English)
 - level_one.csv
 - level_two.csv
 - level_three.csv
