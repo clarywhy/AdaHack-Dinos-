@@ -1,8 +1,23 @@
 # AdaHack-Dinos-
-Project for adahack
+Project for adahack 2023
 
+Learn a new language using our immersive game!
+
+Follow your character as then visit a new country and speak to the locals, before giving it a go yourself, having your own conversations to practise what you've learned and earn points.
+
+### Features
+- Gameified system
+- Example conversations
+- Open source AI chatbot integration
+- Get translations of words and phrases you don't understand
+
+### How to run
+Directions to run coming soon!
+
+## File structure
 ### preprogrammed_conversations 
-- directory containing CSVs for the preprogrammed conversations, delimiter ";" (the ones the user learns from but doesn't interact with)
-- French; English
-- initial_conversaton.csv - An initial conversation of two characters greeting
-- ask_for_directions.csv - Asking for directions to the Eiffel Tower
+- directory containing CSVs for the preprogrammed conversations, French; English
+- level_one.csv
+- level_two.csv
+- level_three.csv
+- level_four.csv
