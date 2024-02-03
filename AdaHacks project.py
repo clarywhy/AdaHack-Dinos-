@@ -51,12 +51,13 @@ displayWidth, displayHeight = WIDTH, HEIGHT
 gameDisplay = pygame.display.set_mode((displayWidth, displayHeight))
 titleImg = pygame.image.load("startpage.png")
 titleImg = pygame.transform.scale(titleImg, (displayWidth, displayHeight))
-EoGImg = pygame.image.load("endofgamescreen.png")
-EoGImg = pygame.transform.scale(EoGImg, (displayWidth, displayHeight))
+#EoGImg = pygame.image.load("endofgamescreen.png")
+#EoGImg = pygame.transform.scale(EoGImg, (displayWidth, displayHeight))
 titleScreen = False
 
 
 ####### TEXT OBJECTS ######################
+
 def textObjects(text, font):
     textSurface = font.render(text, True, BLACK)
     return textSurface, textSurface.get_rect()
@@ -65,6 +66,13 @@ def textObjects(text, font):
 ############### MAKE SHIFT BUTTONS ############################
 
 def button(msg, x, y, w, h, c, action=None):
+
+    font_path = "path/to/VT323.ttf"  # Replace with the actual path to VT323.ttf on your system
+    font_size = 36
+    font = pygame.font.Font(font_path, font_size)
+
+    # Create a text surface
+    text = font.render("Hello, VT323 Font!", True, (255, 255, 255))
     # parameters taken - message, x coord, y coord, width, height, colour, action
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -114,7 +122,7 @@ def titleLoop():
             if event.type == pygame.QUIT:
                 titleScreen = False
                 quit()
-        button("Play",  80, 200, 350, 60, TEAL, mainloop)
+        button("Play",  320, 200, 350, 60, TEAL, mainloop)
         pygame.display.update()
         clock.tick(60)
 
@@ -130,9 +138,9 @@ def mainloop():
     walking_backwards = False
 
     player_images = []
-    dino1 =  pygame.image.load('dinowalking1.jpg')
+    dino1 =  pygame.image.load('dinowalk1.png')
     dino1 = pygame.transform.scale(dino1, (80,80))
-    dino2 =  pygame.image.load('dinowalking2.jpg')
+    dino2 =  pygame.image.load('dinowalk2.png')
     dino2 = pygame.transform.scale(dino2, (80, 80))
     player_images.append(dino1)
     player_images.append(dino2)
