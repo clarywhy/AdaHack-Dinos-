@@ -110,11 +110,11 @@ def button(msg, x, y, w, h, c, action=None):
     
 
 
-'''
+
 ##################### INSTRUCTIONS SCREEN ###################
 
 ### Gonna finish this code once we have the actual game set up
-
+'''
 def gameInstructions():
     global titleScreen, GameScreen
     titleScreen = False
@@ -128,13 +128,35 @@ def gameInstructions():
         button("Back", 100, 550, 100, 50, TEAL, titleLoop)
         pygame.display.update()
         clock.tick(60)
-'''      
-    
-def quitGame():
-    pygame.quit()
-    quit()
+'''    
 
-        
+def display_instructions():
+    # Instructions text
+
+    instructions = [
+        "Welcome to Your Game!",
+        "Instructions:",
+        "- Read what the bunny characters on screen are saying.",
+        "- Press next to read the next part of their conversation",
+        "- Try and work out what the French words mean based on context.",
+        "- Answer questions correctly to earn points.",
+        "Good luck!",
+        "",
+        "Press PLAY to start..."
+    ]
+
+    vt323_font_path = "VT323-Regular.ttf"  
+    vt323_font_size = 30
+    vt323_font = pygame.font.Font(vt323_font_path, vt323_font_size)
+
+    y_position = 50
+    for line in instructions:
+        text = vt323_font.render(line, True, WHITE)
+        text_rect = text.get_rect(center=(WIDTH // 2, y_position))
+        screen.blit(text, text_rect)
+        y_position += 40
+
+
 def titleLoop():       
     screen.blit(titleImg, (0,0))
     titleScreen = True
@@ -143,9 +165,19 @@ def titleLoop():
             if event.type == pygame.QUIT:
                 titleScreen = False
                 quit()
-        button("Play",  320, 200, 350, 60, TEAL, mainloop)
+        
+        display_instructions()
+        button("Play",  320, 400, 350, 60, TEAL, mainloop)
         pygame.display.update()
         clock.tick(60)
+
+
+def quitGame():
+    pygame.quit()
+    quit()
+
+        
+
 
 def colCheck(x,y,w,h,x2,y2,w2,h2):
 #checks if two sprites have met up by comparing the pixel space by comparing their coordinates
