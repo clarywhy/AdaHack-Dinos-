@@ -213,11 +213,13 @@ class Bunny(pygame.sprite.Sprite):
 french_messages = [
     "Salut, Hopper!", 
     "Bonjour, Hopper!", 
-    "Au revoir, Hopper!"]
+    "Au revoir, Hopper!",
+    ""]
 
 english_messages = ["Hi, Hopper!",
                     "Hello, Hopper!", 
-                    "Goodbye, Hopper!"]
+                    "Goodbye, Hopper!",
+                    ""]
 
 # Initialize separate indices for English and French messages
 english_message_index = 0
@@ -402,7 +404,7 @@ def mainloop():
             message_position = (850, 350)
 
         # Render and display the message
-        text_surface = font.render(message, True, WHITE)
+        text_surface = font.render(message, True, BLACK)
         text_rect = text_surface.get_rect(center=message_position)
         screen.blit(text_surface, text_rect)
 
