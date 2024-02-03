@@ -41,7 +41,7 @@ walking = False
 walking_steps = 0
 
 ##Background
-BGImg = pygame.image.load("Leve1-street.png")
+BGImg = pygame.image.load("Level1-street.png")
 BGImg = pygame.transform.scale(BGImg, (WIDTH, HEIGHT ))
 
 
@@ -60,7 +60,19 @@ titleScreen = False
 def textObjects(text, font):
     textSurface = font.render(text, True, BLACK)
     return textSurface, textSurface.get_rect()
-    
+
+initial_convo_text = ["Salut, Hopper!; Hi, Hopper!",
+    "Bonjour Dino!; Hello Dino!",
+    "Ça va?; How are you? (informal)",
+    "Ça va bien! Et toi?; I'm doing well! And you?",
+    "Super! Au revior Dino.; Super! Goodbye Dino.",
+    "À plus tard!; See you later!"]
+current_text_index = 0
+
+fontObj = pygame.font.Font(None, 32)
+current_text = ""
+textSufaceObj = fontObj.render(initial_convo_text[current_text_index], True, BLACK, None)
+textRectObj = textSufaceObj.get_rect()
 
 ############### MAKE SHIFT BUTTONS ############################
 
@@ -173,6 +185,14 @@ def mainloop():
                     walking_backwards = False
                     walking_steps = 5
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            elif event.type == KEYDOWN:
+                if event.key == K_SPACE:
+                    current_text_index = (current_text_index + 1) % len(initial_convo_text)
+                    current_text = initial_convo_text[current_text_index]
+
         # ---------- moves -----------------
         if walking_forward == True:
         # here you need to check some counter 
@@ -204,8 +224,7 @@ def mainloop():
 
         screen.blit(BGImg, (0,0))
         screen.blit(player, (playerX, playerY))
-        text = textObjects("test",font)
-        screen.bilt(text)
+        screen.blit(textSufaceObj, textRectObj)
 
         #pygame.display.flip()
         pygame.display.update()

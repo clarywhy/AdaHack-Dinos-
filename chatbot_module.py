@@ -132,10 +132,10 @@ def conversation_loop(level):
 
 # Start the first level
 # Prompt for the user to start the conversation
-print("Say hello to Hopper!")
-print("When you are finished with the conversation, say \"Au Revior\", which means goodbye!") 
+# print("Say hello to Hopper!")
+# print("When you are finished with the conversation, say \"Au Revior\", which means goodbye!") 
 # TODO: Run the example conversation
 # TODO: Add user guidance - hint button?
 # Initialise the chatbot   
-conversation_loop(first_level)
+# conversation_loop(first_level)
 
