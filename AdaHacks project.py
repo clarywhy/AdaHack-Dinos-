@@ -13,8 +13,8 @@ WIDTH = 1000 #game window width
 HEIGHT = 500 #game window height
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 #colours
-font = pygame.font.SysFont("Helvetica", 25)
-font2 = pygame.font.SysFont("Aharoni", 30)
+font = pygame.font.SysFont("VT323-Regular", 25)
+
 BLACK = [0, 0, 0]
 TEAL = [133, 167, 229]
 BLUE = [0, 102, 102]
@@ -73,7 +73,7 @@ def textObjects(text, font):
 
 def button(msg, x, y, w, h, c, action=None):
 
-    font_path = "path/to/VT323.ttf"  # Replace with the actual path to VT323.ttf on your system
+    font_path = "VT323-Regular.ttf"  # Replace with the actual path to VT323.ttf on your system
     font_size = 36
     font = pygame.font.Font(font_path, font_size)
 
@@ -82,16 +82,21 @@ def button(msg, x, y, w, h, c, action=None):
     # parameters taken - message, x coord, y coord, width, height, colour, action
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
+
+    border_rect = pygame.Rect(x-5, y-5, w+10, h+10)
+    pygame.draw.rect(screen, (255, 255, 255), border_rect)
+
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(screen, c, (x,y,w,h))
         if click[0] == 1 and action != None:
             action()
     else:
         pygame.draw.rect(screen, c, (x, y, w, h))
-    text = pygame.font.SysFont("Aharoni", 30)
-    textSurf, textRect = textObjects(msg, text)
+    text = font.render(msg, True, (255, 255, 255))
+    textRect = text.get_rect()
+    #textSurf, textRect = textObjects(msg, text)
     textRect.center = ((x+(w/2)), y+(h/2))
-    screen.blit(textSurf, textRect)
+    screen.blit(text, textRect)
     
 
 
@@ -276,12 +281,23 @@ def mainloop():
         # --- checking for meet up -----
         if pygame.sprite.spritecollideany(dinoGroup.sprite, bunnyGroup):
             print("Collision detected!")
+
+            ##### Define Font for message ###########
+            font_path = "VT323-Regular.ttf"  # Replace with the actual path to VT323.ttf on your system
+            font_size = 36
+            font = pygame.font.Font(font_path, font_size)
+
+            # Create a text surface
+            text = font.render("Hello, VT323 Font!", True, (255, 255, 255))
+    
+            ###### write message
             msg = "Filler Text"
-            pygame.draw.rect(screen, WHITE, (10, 450, 950, 40), 2)
-            text = pygame.font.SysFont("Aharoni", 30)
-            textSurf, textRect = textObjects(msg, text)
-            textRect.center = ((10+(800/2)), 450+(30/2))
-            screen.blit(textSurf, textRect)
+            pygame.draw.rect(screen, WHITE, (10, 450, 950, 40))
+            text = font.render(msg, True, (0, 0, 0))
+            textRect = text.get_rect()
+            #textSurf, textRect = textObjects(msg, text)
+            textRect.center = ((10+(950/2)), 450+(40/2))
+            screen.blit(text, textRect)
         
         
 
