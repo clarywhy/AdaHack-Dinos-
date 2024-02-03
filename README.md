@@ -15,6 +15,10 @@ Follow your character as then visit a new country and speak to the locals, befor
 Directions to run coming soon!
 
 ## File structure
+### AdaHacks Project.py
+The main game file. Run this to play the game!
+### chatbot_module.py
+The code implementing our chatbot
 ### preprogrammed_conversations 
 (directory containing CSVs for the preprogrammed conversations, French; English)
 - level_one.csv
