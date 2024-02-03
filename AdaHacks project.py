@@ -37,7 +37,13 @@ hopper = pygame.image.load("hopper.png")
 hopper = pygame.transform.scale(hopper, (80, 80))
 hopperRect = hopper.get_rect()
 
-playerX = 610
+# Load, scale, and add the second bunny sprite
+mopper = pygame.image.load("mopper.png")
+mopper = pygame.transform.scale(mopper, (80, 80))  # Adjust the size as needed
+
+
+
+playerX = 200
 playerY = 350
 
 walking = False
@@ -49,13 +55,14 @@ bunnyGroup = pygame.sprite.GroupSingle(None)  # group containing all sprites (fo
 ##Background
 BGImg = pygame.image.load("Level2-eiffel.png")
 BGImg = pygame.transform.scale(BGImg, (WIDTH, HEIGHT ))
-
+eiffelTower = pygame.image.load("eiffeltower.png")
+eiffelTower = pygame.transform.scale(eiffelTower, (180, 300))
 
 
 ##Screens
 displayWidth, displayHeight = WIDTH, HEIGHT
 gameDisplay = pygame.display.set_mode((displayWidth, displayHeight))
-titleImg = pygame.image.load("startpage.png")
+titleImg = pygame.image.load("startscrn.png")
 titleImg = pygame.transform.scale(titleImg, (displayWidth, displayHeight))
 #EoGImg = pygame.image.load("endofgamescreen.png")
 #EoGImg = pygame.transform.scale(EoGImg, (displayWidth, displayHeight))
@@ -166,6 +173,28 @@ class Bunny(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=position)
 
 
+######### messages ################
+# Define messages for the conversation
+messages = [
+    "Bunny One: Message 1",
+    "Bunny Two: Message 2",
+    "Bunny One: Message 3",
+    "Bunny Two: Message 4"
+]
+current_message_index = 0  # To keep track of which message to display
+
+# Function to go to the next message
+def next_message():
+    global current_message_index
+    current_message_index += 1
+    if current_message_index >= len(messages):
+        current_message_index = 0  # Loop back to the first message or end conversation
+
+# Modify or ensure your button function can call next_message
+# You might have already a way to call a function, just ensure it calls next_message when needed
+
+
+
 def mainloop():
 
     ####### no clue why the global variables at the start aren't being accessed here]
@@ -185,12 +214,16 @@ def mainloop():
     hopper = pygame.image.load("hopper.png")
     hopper = pygame.transform.scale(hopper, (80, 80))
     hopperRect = hopper.get_rect()
+    topper = pygame.image.load("topper.png")
+    topper = pygame.transform.scale(topper, (80, 80))
+    #mopperBunny = Bunny('topper.png', (880, 400), (80, 80))  # Position it next to the first bunny
+    #bunnyGroup.add(mopperBunny)
     player_images.append(dino1)
     player_images.append(dino2)
     player_current = 0
     player = player_images[ player_current ]
 
-    playerX = 610
+    playerX = 200
     playerY = 350
 
 
@@ -212,13 +245,16 @@ def mainloop():
     bunnyGroup = pygame.sprite.Group()
 
     # Create instances of Dino and Bunny
-    dino = Dino('dinowalk1.png', (300, 350), (80, 80))
+    dino = Dino('dinowalk1.png', (75, 350), (80, 80))
     bunny = Bunny('hopper.png', (850, 400), (80, 80))
+    topper = Bunny('topper.png', (750, 400), (80, 80))
 
     # Add instances to their respective groups
     dinoGroup.add(dino)
     bunnyGroup.add(bunny)
+    bunnyGroup.add(topper)
 
+    #screen.blit(eiffelTower, (50, 10))
     ##### player sprite
 
     while gameLoop==True:
@@ -276,7 +312,18 @@ def mainloop():
         # --- draws ---
 
         screen.blit(BGImg, (0,0))
+        screen.blit(eiffelTower, (425, 100))
         screen.blit(player, (playerX, playerY))
+
+        ############# conversation for first two bunnies ####################
+        # Inside your game loop, draw the current message
+        font = pygame.font.Font("VT323-Regular.ttf", 24)  # Adjust the size as needed
+        text_surface = font.render(messages[current_message_index], True, WHITE)
+        text_rect = text_surface.get_rect(center=(750, 340))  # Adjust position as needed
+        screen.blit(text_surface, text_rect)
+        # Inside your game loop, add a button for progressing through messages
+        button("Next", 900, 450, 80, 30, TEAL, next_message)  # Adjust position and size as needed
+
         meetUp = False
         # --- checking for meet up -----
         if pygame.sprite.spritecollideany(dinoGroup.sprite, bunnyGroup):
@@ -304,10 +351,13 @@ def mainloop():
         for sprite in bunnyGroup:
             sprite.update()  # update each sprite so change position etc.
         
+
+        
         bunnyGroup.draw(screen)
-        pygame.draw.rect(screen, (255, 0, 0), dinoGroup.sprite.rect, 2)  # Draw dino rect in red
-        for bunny in bunnyGroup:
-            pygame.draw.rect(screen, (0, 255, 0), bunny.rect, 2)  # Draw bunny rects in green
+        #pygame.draw.rect(screen, (255, 0, 0), dinoGroup.sprite.rect, 2)  # Draw dino rect in red
+        #for bunny in bunnyGroup:
+            #pygame.draw.rect(screen, (0, 255, 0), bunny.rect, 2)  # Draw bunny rects in green
+        
 
         #pygame.display.flip()
         pygame.display.update()
