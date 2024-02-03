@@ -6,6 +6,9 @@ chatbot = ChatBot("Le Hopper")
 trainer = ChatterBotCorpusTrainer(chatbot)
 trainer.train("chatterbot.corpus.french")
 
+userScore = 0
+targetWords = ["bonjour"]
+
 conversation = [
     "Bonjour",
     "salut",
