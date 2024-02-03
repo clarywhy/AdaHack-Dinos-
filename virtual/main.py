@@ -1,6 +1,15 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
 
+class Character:
+    def __init__(self, name, conversation, targetWords):
+        self.name = name
+        self.conversation = conversation
+        self.targetWords = targetWords
+        
+        self.chatbot = ChatBot(name)
+        
+
 chatbot = ChatBot("Le Hopper")
 
 trainer = ChatterBotCorpusTrainer(chatbot)
