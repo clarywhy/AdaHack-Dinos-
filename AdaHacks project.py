@@ -29,8 +29,8 @@ DARKGREY = [100, 100, 100]
 
 ### walking dino buffer to circulate and make it look like its moving
 player_images = []
-player_images.append( pygame.image.load('dinowalking1.jpg') )
-player_images.append( pygame.image.load('dinowalking2.jpg') )
+player_images.append( pygame.image.load('dinowalk1.png') )
+player_images.append( pygame.image.load('dinowalk2.png') )
 player_current = 0
 player = player_images[ player_current ]
 
